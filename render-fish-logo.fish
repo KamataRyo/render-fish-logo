@@ -1,18 +1,20 @@
 #!/usr/bin/env fish
-# The colored ascii art is originated by [xfix](https://github.com/xfix) at https://github.com/fish-shell/fish-shell/issues/114
+# The default colored ascii art is originated by [xfix](https://github.com/xfix)
+# at https://github.com/fish-shell/fish-shell/issues/114
 
 function render_fish_logo --description "render fish logo<render_fish_logo color1 color2 color3>"
   # default colors
-  set colors[1] F00
+  set colors[1] FF0000
   set colors[2] FF7F00
-  set colors[3] FF0
+  set colors[3] FFFF00
 
   set i 1
   for arg in $argv
-    set colors[$i] $arg
+    if set_color -q $arg # in other sense if $arg is effective color value
+        set colors[$i] $arg
+    end
     set i (math "$i+1")
   end
-
 
   echo "                 "(set_color $colors[1])"___"
   echo "  ___======____="(set_color $colors[2])"-"(set_color $colors[3])"-"(set_color $colors[2])"-="(set_color $colors[1])")"
@@ -30,6 +32,5 @@ function render_fish_logo --description "render fish logo<render_fish_logo color
   echo "                      (J"(set_color $colors[2])"JJ"(set_color $colors[1])"| \UUU)"
   echo "                       (UU)"(set_color normal)
 end
-
 
 render_fish_logo $argv
